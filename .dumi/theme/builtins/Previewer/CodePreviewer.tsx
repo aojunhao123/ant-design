@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { unit } from '@ant-design/cssinjs/lib/util';
 import { LinkOutlined, ThunderboltOutlined, UpOutlined } from '@ant-design/icons';
 import type { Project } from '@stackblitz/sdk';
 import stackblitzSdk from '@stackblitz/sdk';
@@ -83,6 +84,21 @@ const useStyle = createStyles(({ token }) => {
       }
       span {
         margin-inline-end: ${token.marginXXS}px;
+      }
+    `,
+    resetBtn: css`
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+      &:focus-visible {
+        outline: ${unit(token.lineWidthFocus)} solid ${token.colorPrimaryBorder};
+        outline-offset: 1px;
+        transition:
+          outline-offset 0s,
+          outline 0s;
       }
     `,
   };
@@ -420,26 +436,28 @@ createRoot(document.getElementById('container')).render(<Demo />);
                 </a>
               </Tooltip>
             )}
-            <form
-              className="code-box-code-action"
-              action="https://codesandbox.io/api/v1/sandboxes/define"
-              method="POST"
-              target="_blank"
-              ref={codeSandboxIconRef}
-              onClick={() => {
-                track({ type: 'codesandbox', demo: asset.id });
-                codeSandboxIconRef.current?.submit();
-              }}
-            >
-              <input
-                type="hidden"
-                name="parameters"
-                value={compress(JSON.stringify(codesanboxPrefillConfig))}
-              />
-              <Tooltip title={<FormattedMessage id="app.demo.codesandbox" />}>
-                <CodeSandboxIcon className="code-box-codesandbox" />
-              </Tooltip>
-            </form>
+            <button type="button" className={styles.resetBtn}>
+              <form
+                className="code-box-code-action"
+                action="https://codesandbox.io/api/v1/sandboxes/define"
+                method="POST"
+                target="_blank"
+                ref={codeSandboxIconRef}
+                onClick={() => {
+                  track({ type: 'codesandbox', demo: asset.id });
+                  codeSandboxIconRef.current?.submit();
+                }}
+              >
+                <input
+                  type="hidden"
+                  name="parameters"
+                  value={compress(JSON.stringify(codesanboxPrefillConfig))}
+                />
+                <Tooltip title={<FormattedMessage id="app.demo.codesandbox" />}>
+                  <CodeSandboxIcon className="code-box-codesandbox" />
+                </Tooltip>
+              </form>
+            </button>
             {showRiddleButton ? (
               <form
                 className="code-box-code-action"
@@ -459,8 +477,9 @@ createRoot(document.getElementById('container')).render(<Demo />);
               </form>
             ) : null}
             <Tooltip title={<FormattedMessage id="app.demo.stackblitz" />}>
-              <span
-                className="code-box-code-action"
+              <button
+                type="button"
+                className={`code-box-code-action ${styles.resetBtn}`}
                 onClick={() => {
                   track({ type: 'stackblitz', demo: asset.id });
                   stackblitzSdk.openProject(stackblitzPrefillConfig, {
@@ -472,26 +491,28 @@ createRoot(document.getElementById('container')).render(<Demo />);
                   className="code-box-stackblitz"
                   style={{ transform: 'scale(1.2)' }}
                 />
-              </span>
+              </button>
             </Tooltip>
-            <form
-              className="code-box-code-action"
-              action="https://codepen.io/pen/define"
-              method="POST"
-              target="_blank"
-              ref={codepenIconRef}
-              onClick={() => {
-                track({ type: 'codepen', demo: asset.id });
-                codepenIconRef.current?.submit();
-              }}
-            >
-              <ClientOnly>
-                <input type="hidden" name="data" value={JSON.stringify(codepenPrefillConfig)} />
-              </ClientOnly>
-              <Tooltip title={<FormattedMessage id="app.demo.codepen" />}>
-                <CodePenIcon className="code-box-codepen" />
-              </Tooltip>
-            </form>
+            <button type="button" className={styles.resetBtn}>
+              <form
+                className="code-box-code-action"
+                action="https://codepen.io/pen/define"
+                method="POST"
+                target="_blank"
+                ref={codepenIconRef}
+                onClick={() => {
+                  track({ type: 'codepen', demo: asset.id });
+                  codepenIconRef.current?.submit();
+                }}
+              >
+                <ClientOnly>
+                  <input type="hidden" name="data" value={JSON.stringify(codepenPrefillConfig)} />
+                </ClientOnly>
+                <Tooltip title={<FormattedMessage id="app.demo.codepen" />}>
+                  <CodePenIcon className="code-box-codepen" />
+                </Tooltip>
+              </form>
+            </button>
             <Tooltip title={<FormattedMessage id="app.demo.separate" />}>
               <a
                 className="code-box-code-action"
@@ -506,7 +527,11 @@ createRoot(document.getElementById('container')).render(<Demo />);
             <Tooltip
               title={<FormattedMessage id={`app.demo.code.${codeExpand ? 'hide' : 'show'}`} />}
             >
-              <div className="code-expand-icon code-box-code-action">
+              <button
+                type="button"
+                className={`code-expand-icon code-box-code-action ${styles.resetBtn}`}
+                onClick={() => handleCodeExpand(asset.id)}
+              >
                 <img
                   alt="expand code"
                   src={
@@ -527,7 +552,7 @@ createRoot(document.getElementById('container')).render(<Demo />);
                   className={codeExpand ? 'code-expand-icon-show' : 'code-expand-icon-hide'}
                   onClick={() => handleCodeExpand(asset.id)}
                 />
-              </div>
+              </button>
             </Tooltip>
           </Flex>
         </section>

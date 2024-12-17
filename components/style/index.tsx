@@ -1,5 +1,6 @@
 import { unit } from '@ant-design/cssinjs';
 import type { CSSObject } from '@ant-design/cssinjs';
+
 import type { AliasToken } from '../theme/internal';
 
 export const textEllipsis: CSSObject = {
@@ -59,42 +60,6 @@ export const clearFix = (): CSSObject => ({
   },
 });
 
-export const genLinkStyle = (token: AliasToken): CSSObject => ({
-  a: {
-    color: token.colorLink,
-    textDecoration: token.linkDecoration,
-    backgroundColor: 'transparent', // remove the gray background on active links in IE 10.
-    outline: 'none',
-    cursor: 'pointer',
-    transition: `color ${token.motionDurationSlow}`,
-    '-webkit-text-decoration-skip': 'objects', // remove gaps in links underline in iOS 8+ and Safari 8+.
-
-    '&:hover': {
-      color: token.colorLinkHover,
-    },
-
-    '&:active': {
-      color: token.colorLinkActive,
-    },
-
-    '&:active, &:hover': {
-      textDecoration: token.linkHoverDecoration,
-      outline: 0,
-    },
-
-    // https://github.com/ant-design/ant-design/issues/22503
-    '&:focus': {
-      textDecoration: token.linkFocusDecoration,
-      outline: 0,
-    },
-
-    '&[disabled]': {
-      color: token.colorTextDisabled,
-      cursor: 'not-allowed',
-    },
-  },
-});
-
 export const genCommonStyle = (
   token: AliasToken,
   componentPrefixCls: string,
@@ -140,6 +105,41 @@ export const genFocusOutline = (token: AliasToken): CSSObject => ({
 export const genFocusStyle = (token: AliasToken): CSSObject => ({
   '&:focus-visible': {
     ...genFocusOutline(token),
+  },
+});
+
+export const genLinkStyle = (token: AliasToken): CSSObject => ({
+  a: {
+    color: token.colorLink,
+    textDecoration: token.linkDecoration,
+    backgroundColor: 'transparent', // remove the gray background on active links in IE 10.
+    cursor: 'pointer',
+    transition: `color ${token.motionDurationSlow}`,
+    '-webkit-text-decoration-skip': 'objects', // remove gaps in links underline in iOS 8+ and Safari 8+.
+
+    '&:hover': {
+      color: token.colorLinkHover,
+    },
+
+    '&:active': {
+      color: token.colorLinkActive,
+    },
+
+    '&:active, &:hover': {
+      textDecoration: token.linkHoverDecoration,
+      outline: 0,
+    },
+
+    // https://github.com/ant-design/ant-design/issues/22503
+    '&:focus-visible': {
+      textDecoration: token.linkFocusDecoration,
+      ...genFocusOutline(token),
+    },
+
+    '&[disabled]': {
+      color: token.colorTextDisabled,
+      cursor: 'not-allowed',
+    },
   },
 });
 
