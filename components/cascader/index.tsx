@@ -128,6 +128,15 @@ export interface CascaderProps<
 
   rootClassName?: string;
   popupClassName?: string;
+  /** @deprecated Please use `popupRender` instead */
+  dropdownRender?: (menu: React.ReactElement) => React.ReactElement;
+  popupRender?: (menu: React.ReactElement) => React.ReactElement;
+  /** @deprecated Please use `popupMenuColumnStyle` instead */
+  dropdownMenuColumnStyle?: React.CSSProperties;
+  popupMenuColumnStyle?: React.CSSProperties;
+  /** @deprecated Please use `onPopupVisibleChange` instead */
+  onDropdownVisibleChange?: (visible: boolean) => void;
+  onPopupVisibleChange?: (visible: boolean) => void;
   /**
    * @since 5.13.0
    * @default "outlined"
@@ -170,6 +179,12 @@ const Cascader = React.forwardRef<CascaderRef, CascaderProps<any>>((props, ref) 
     builtinPlacements,
     style,
     variant: customVariant,
+    dropdownRender,
+    onDropdownVisibleChange,
+    dropdownMenuColumnStyle,
+    popupRender,
+    popupMenuColumnStyle,
+    onPopupVisibleChange,
     ...rest
   } = props;
 
@@ -229,7 +244,7 @@ const Cascader = React.forwardRef<CascaderRef, CascaderProps<any>>((props, ref) 
     <DefaultRenderEmpty componentName="Cascader" />
   );
 
-  // =================== Dropdown ====================
+  // =================== Popup ====================
   const mergedPopupClassName = classNames(
     popupClassName,
     `${cascaderPrefixCls}-dropdown`,
@@ -242,6 +257,10 @@ const Cascader = React.forwardRef<CascaderRef, CascaderProps<any>>((props, ref) 
     hashId,
     cssVarCls,
   );
+
+  const mergedPopupRender = popupRender || dropdownRender;
+  const mergedPopupMenuColumnStyle = popupMenuColumnStyle || dropdownMenuColumnStyle;
+  const mergedOnPopupVisibleChange = onPopupVisibleChange || onDropdownVisibleChange;
 
   // ==================== Search =====================
   const mergedShowSearch = React.useMemo(() => {
@@ -341,6 +360,9 @@ const Cascader = React.forwardRef<CascaderRef, CascaderProps<any>>((props, ref) 
       popupClassName={mergedPopupClassName}
       popupPrefixCls={customizePrefixCls || cascaderPrefixCls}
       popupStyle={{ ...restProps.popupStyle, zIndex }}
+      popupRender={mergedPopupRender}
+      popupMenuColumnStyle={mergedPopupMenuColumnStyle}
+      onPopupVisibleChange={mergedOnPopupVisibleChange}
       choiceTransitionName={getTransitionName(rootPrefixCls, '', choiceTransitionName)}
       transitionName={getTransitionName(rootPrefixCls, 'slide-up', transitionName)}
       getPopupContainer={getPopupContainer || getContextPopupContainer}
