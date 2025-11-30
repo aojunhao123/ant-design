@@ -81,6 +81,7 @@ export interface BlockProps<C extends keyof JSX.IntrinsicElements = keyof JSX.In
   strong?: boolean;
   keyboard?: boolean;
   italic?: boolean;
+  shiny?: boolean;
 }
 
 function wrapperDecorations(
@@ -133,6 +134,7 @@ const Base = React.forwardRef<HTMLElement, BlockProps>((props, ref) => {
     copyable,
     component,
     title,
+    shiny,
     ...restProps
   } = props;
   const { getPrefixCls, direction } = React.useContext(ConfigContext);
@@ -440,6 +442,7 @@ const Base = React.forwardRef<HTMLElement, BlockProps>((props, ref) => {
                 [`${prefixCls}-ellipsis`]: enableEllipsis,
                 [`${prefixCls}-ellipsis-single-line`]: cssTextOverflow,
                 [`${prefixCls}-ellipsis-multiple-line`]: cssLineClamp,
+                [`${prefixCls}-shiny-text`]: shiny,
               },
               className,
             )}

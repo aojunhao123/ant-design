@@ -8,9 +8,9 @@ const blockContent = `AntV 是蚂蚁集团全新一代数据可视化解决方�
 
 const App: React.FC = () => (
   <Typography>
-    <Title>Introduction</Title>
+    <Title shiny>Introduction</Title>
 
-    <Paragraph>
+    <Paragraph shiny>
       In the process of internal desktop applications development, many different design specs and
       implementations would be involved, which might cause designers and developers difficulties and
       duplication and reduce the efficiency of development.
@@ -19,7 +19,7 @@ const App: React.FC = () => (
     <Paragraph>
       After massive project practice and summaries, Ant Design, a design language for background
       applications, is refined by Ant UED Team, which aims to{' '}
-      <Text strong>
+      <Text strong shiny>
         uniform the user interface specs for internal background projects, lower the unnecessary
         cost of design differences and implementation and liberate the resources of design and
         front-end development
@@ -38,7 +38,9 @@ const App: React.FC = () => (
     <Paragraph>
       <ul>
         <li>
-          <Link href="/docs/spec/proximity">Principles</Link>
+          <Link href="/docs/spec/proximity" shiny>
+            Principles
+          </Link>
         </li>
         <li>
           <Link href="/docs/spec/overview">Patterns</Link>

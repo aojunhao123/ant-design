@@ -9,6 +9,7 @@
 */
 import { gold } from '@ant-design/colors';
 import type { CSSObject } from '@ant-design/cssinjs';
+import { Keyframes } from '@ant-design/cssinjs';
 
 import type { TypographyToken } from '.';
 import { operationUnit } from '../../style';
@@ -268,3 +269,28 @@ export const getEllipsisStyles = (): CSSObject => ({
     WebkitBoxOrient: 'vertical',
   },
 });
+
+const shiny = new Keyframes('shiny', {
+  from: {
+    backgroundPosition: '200%',
+  },
+  to: {
+    backgroundPosition: '-200%',
+  },
+});
+
+export const getShinyTextStyles: GenerateStyle<TypographyToken, CSSObject> = (token) => {
+  return {
+    '&-shiny-text': {
+      color: 'inherit',
+      background: `linear-gradient(120deg, ${token.colorTextBase} 40%, ${token.colorTextSecondary} 50%, ${token.colorTextBase} 60%)`,
+      backgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundSize: '200% auto',
+      animationName: shiny,
+      animationDuration: '3s',
+      animationTimingFunction: 'linear',
+      animationIterationCount: 'infinite',
+    },
+  };
+};

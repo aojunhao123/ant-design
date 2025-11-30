@@ -7,6 +7,7 @@ import {
   getEllipsisStyles,
   getLinkStyles,
   getResetStyles,
+  getShinyTextStyles,
   getTitleStyles,
 } from './mixins';
 
@@ -105,6 +106,8 @@ const genTypographyStyle: GenerateStyle<TypographyToken> = (token) => {
       ...getResetStyles(token),
 
       ...getLinkStyles(token),
+
+      ...getShinyTextStyles(token),
 
       // Operation
       [`
