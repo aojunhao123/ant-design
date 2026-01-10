@@ -46,6 +46,10 @@ const SiteThemeProvider: React.FC<ThemeProviderProps<any>> = ({ children, theme,
     if (window.parent !== window) {
       updateCSS(
         `
+      html, body {
+        height: 100%;
+      }
+
       [data-prefers-color='dark'] {
         color-scheme: dark !important;
       }
